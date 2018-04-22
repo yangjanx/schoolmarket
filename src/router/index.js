@@ -1,6 +1,7 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from '@/components/Home'
+import HomeFirst from '@/components/HomeFirst'
 import Cart from '@/components/Cart'
 import Login from '@/components/Login'
 import Publish from '@/components/Publish'
@@ -15,43 +16,46 @@ export default new Router({
   routes: [
     {
       path: '/home',
-      component: Home
+      component: Home,
+      children: [
+        { path: '/', component: HomeFirst }
+      ]
     },
     {
-      path:'/shop',
-      component:Shop
+      path: '/shop',
+      component: Shop
     },
     {
-      path:'/searchresult',
-      component:Searchresult
+      path: '/searchresult',
+      component: Searchresult
     },
     {
-      path:'/shopitem',
-      component:Shopitem
+      path: '/shopitem',
+      component: Shopitem
     },
     {
-      path:'/usercenter',
-      component:Usercenter
+      path: '/usercenter',
+      component: Usercenter
     },
     {
-      path:'/publish',
-      component:Publish
+      path: '/publish',
+      component: Publish
     },
     {
-      path:'/cart',
-      component:Cart
+      path: '/cart',
+      component: Cart
     },
     {
-      path:'/login',
-      component:Login
+      path: '/login',
+      component: Login
     },
     {
-      path:'/',
-      redirect:'/home'
+      path: '/',
+      redirect: '/home'
     },
     {
-      path:'/*',
-      redirect:'/home'
+      path: '/*',
+      redirect: '/home'
     }
   ]
 })
