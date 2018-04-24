@@ -4,8 +4,8 @@
       <div class="login_top">
         <ul class="login_nav">
           <li><router-link to="/cart">购物车({{cart.length}})</router-link></li>
-          <li @click="changeLoginway('login')"><router-link to="/login" class="login">登 录</router-link></li>
-          <li @click="changeLoginway('register')"><router-link to="/login" class="register">注 册</router-link></li>
+          <li @click="changeLoginway('login')"><router-link to="/login" class="login">登录</router-link></li>
+          <li @click="changeLoginway('register')"><router-link to="/login" class="register">注册</router-link></li>
         </ul>
       </div>
       <div class="nav">
@@ -16,7 +16,7 @@
         </ul>
         <ul class="right_nav">
           <li :class="{bg:show===right_nav_value}" v-for="right_nav_value in right_navs">
-            <router-link :to="'/home/'+right_nav_value" class="nav_a">{{right_nav_value.toUpperCase()}}</router-link>
+            <router-link :to="'/'+right_nav_value" class="nav_a">{{right_nav_value.toUpperCase()}}</router-link>
           </li>
         </ul>
         <h1 class="theme">
@@ -87,7 +87,40 @@ export default {
     handleScroll() {
       this.showgotoTop = window.scrollY >= 50 ? true : false;
     }
-  }
+  },
+
+  created(){
+      var self=this;
+      var a=1
+      window.onload=()=>{
+        this.$store.dispatch('change_hw',{
+          h:document.documentElement.clientHeight||document.body.clientHeight,
+          w:document.documentElement.clientWidth||document.body.clientWidth
+        })
+      }
+      window.onresize=()=>{
+        if(self.timer){
+          clearTimeout(self.timer)//函数节流
+        }
+        self.timer=setTimeout(function(){
+      
+          self.$store.dispatch('change_hw',{
+            h:document.documentElement.clientHeight||document.body.clientHeight,
+            w:document.documentElement.clientWidth||document.body.clientWidth
+          })
+        },100)
+      }
+      window.onscroll=()=>{
+        
+         var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
+            if(scrollTop>10){
+              this.scroll=true;
+            }else{
+              this.scroll=false;
+            }
+        
+      }
+   }
 };
 </script>
 
