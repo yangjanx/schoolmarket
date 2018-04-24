@@ -1,12 +1,16 @@
 <template>
   <div class="home">
-    <aside class="home_aside" :style="{height:home_aside_height_margin+'px'}">
+    <aside class="home_aside" :style="{height:home_aside_height+'px'}">
         <h1 :style="{height:home_aside_height_margin+'px',lineHeight:home_aside_height_margin+'px'}">Welcome</h1>
         <ul class="home_aside_ul">
-            <li>
-                <router-link :to="'/home/'"></router-link>
+            <li v-for="ahuter in ahuters">
+                <router-link :to="'/'" tag="img" :src="ahuter.src" class="home_aside_ul_img"></router-link>
             </li>
         </ul>
+        <div>
+          <p class="title1">安徽工业大学二手物品交易网</p>
+          <p class="txt1">温馨提示：此平台仅限于安徽工业大学校友使用，请同学们提高防范意识，确认身份后再进行交易。</p>
+        </div>
     </aside>
 	<transition name="introduction">
 		<router-view></router-view>
@@ -19,7 +23,8 @@ import { mapGetters } from "vuex";
 export default {
   computed: {
     ...mapGetters({
-      hw: "getHW"
+      hw: "getHW",
+      ahuters:"getAhuter"
     }),
     home_aside_height: function() {
       var a = parseInt(this.hw.h) - 200;
@@ -60,7 +65,7 @@ export default {
 .home_aside_ul {
   overflow: hidden;
   width: 300px;
-  height: 300px;
+  height: 150px;
   margin-left: 50px;
 }
 .home_aside_ul li {
@@ -96,5 +101,18 @@ export default {
   -webkit-transform: rotate(360deg); /* Safari and Chrome */
   -o-transform: rotate(360deg); /* Opera */
   -moz-transform: rotate(360deg);
+}
+.title1{
+  font-size: 15px;
+  text-align: center;
+  margin-top: 78px;
+  color:#e2dede;
+}
+.txt1{
+  font-size:14px;
+  width: 315px;
+  text-align: center;
+  margin: 10px auto;
+  color:#e2dede;
 }
 </style>
