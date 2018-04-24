@@ -22,6 +22,10 @@ const state = {
 		usercenter: 'usercenter',
 		publish: 'publish'
 	},
+	ahuterArr:[
+		{name:'ahtuer1',src:'../static/images/ahuter1.jpg'},
+		{name:'ahuter2',src:'../static/images/ahuter2.jpg'},
+	],
 	goods: [
 		//商品信息
 		{
@@ -368,6 +372,9 @@ const getters = {
 	},
 	getLoginway: function (state) {
 		return state.loginway
+	},
+	getAhuter:function(state){
+		return state.ahuterArr
 	}
 }
 export default new Vuex.Store({
