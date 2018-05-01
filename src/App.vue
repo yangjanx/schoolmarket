@@ -70,7 +70,7 @@ export default {
       var gotoTop = function() {
         var currentPosition =
           document.documentElement.scrollTop || document.body.scrollTop;
-        currentPosition -= 10;
+        currentPosition -= 40;
         if (currentPosition > 0) {
           window.scrollTo(0, currentPosition);
         } else {
@@ -89,38 +89,39 @@ export default {
     }
   },
 
-  created(){
-      var self=this;
-      var a=1
-      window.onload=()=>{
-        this.$store.dispatch('change_hw',{
-          h:document.documentElement.clientHeight||document.body.clientHeight,
-          w:document.documentElement.clientWidth||document.body.clientWidth
-        })
+  created() {
+    var self = this;
+    var a = 1;
+    window.onload = () => {
+      this.$store.dispatch("change_hw", {
+        h: document.documentElement.clientHeight || document.body.clientHeight,
+        w: document.documentElement.clientWidth || document.body.clientWidth
+      });
+    };
+    window.onresize = () => {
+      if (self.timer) {
+        clearTimeout(self.timer); //函数节流
       }
-      window.onresize=()=>{
-        if(self.timer){
-          clearTimeout(self.timer)//函数节流
-        }
-        self.timer=setTimeout(function(){
-      
-          self.$store.dispatch('change_hw',{
-            h:document.documentElement.clientHeight||document.body.clientHeight,
-            w:document.documentElement.clientWidth||document.body.clientWidth
-          })
-        },100)
+      self.timer = setTimeout(function() {
+        self.$store.dispatch("change_hw", {
+          h:
+            document.documentElement.clientHeight || document.body.clientHeight,
+          w: document.documentElement.clientWidth || document.body.clientWidth
+        });
+      }, 100);
+    };
+    window.onscroll = () => {
+      var scrollTop =
+        document.documentElement.scrollTop ||
+        window.pageYOffset ||
+        document.body.scrollTop;
+      if (scrollTop > 10) {
+        this.scroll = true;
+      } else {
+        this.scroll = false;
       }
-      window.onscroll=()=>{
-        
-         var scrollTop = document.documentElement.scrollTop || window.pageYOffset || document.body.scrollTop;
-            if(scrollTop>10){
-              this.scroll=true;
-            }else{
-              this.scroll=false;
-            }
-        
-      }
-   }
+    };
+  }
 };
 </script>
 
