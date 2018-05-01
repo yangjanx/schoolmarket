@@ -9,6 +9,7 @@ import Searchresult from '@/components/Searchresult'
 import Shop from '@/components/Shop'
 import Shopitem from '@/components/Shopitem'
 import Usercenter from '@/components/Usercenter'
+import Shoplist from '@/components/Shoplist'
 
 Vue.use(Router)
 
@@ -23,7 +24,10 @@ export default new Router({
     },
     {
       path: '/shop',
-      component: Shop
+      component: Shop,
+      children:[
+        {path:'/',component:Shoplist}
+      ]
     },
     {
       path: '/searchresult',
