@@ -1,5 +1,6 @@
 <template>
   <div class="home">
+    <!-- 主页面右侧 -->
     <aside class="home_aside" :style="{height:home_aside_height+'px'}">
         <h1 :style="{height:home_aside_height_margin+'px',lineHeight:home_aside_height_margin+'px'}">Welcome</h1>
         <ul class="home_aside_ul">
