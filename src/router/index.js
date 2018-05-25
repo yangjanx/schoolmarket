@@ -10,6 +10,12 @@ import Shop from '@/components/Shop'
 import Shopitem from '@/components/Shopitem'
 import Usercenter from '@/components/Usercenter'
 import Shoplist from '@/components/Shoplist'
+import Personalprofile from '@/components/Personalprofile'
+import Modifypsd from '@/components/Modifypsd'
+import Orderhistory from '@/components/Orderhistory'
+import Mycomment from '@/components/Mycomment'
+import Follow from '@/components/Follow'
+import Collection from '@/components/Collection'
 
 Vue.use(Router)
 
@@ -39,15 +45,27 @@ export default new Router({
     },
     {
       path: '/usercenter',
-      component: Usercenter
+      component: Usercenter,
+      redirect:'/orderhistory',
+      children:[
+        {path:'/orderhistory',component:Orderhistory},
+        {path:'/mycomment',component:Mycomment},
+        {path:'/personalprofile',component:Personalprofile},
+        {path:'/modifypsd',component:Modifypsd},
+        {path:'/follow',component:Follow},
+        {path:'/collection',component:Collection}
+      ],
+      meta:{auth:true} //设置当前路由需要校验
     },
     {
       path: '/publish',
-      component: Publish
+      component: Publish,
+      meta:{auth:true} //设置当前路由需要校验
     },
     {
       path: '/cart',
-      component: Cart
+      component: Cart,
+      meta:{auth:true} //设置当前路由需要校验
     },
     {
       path: '/login',

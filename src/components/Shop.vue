@@ -1,11 +1,20 @@
 <template>
   <div class="shop">
-      <div class="classify"></div>
+      <div class="classify">
+          <ul>
+              <li v-for="classi in classis">{{classi.title}}</li>
+          </ul>
+      </div>
       <div class="goodswrap">
         <div class="searchwrap">
           <div class="search">
-              <input type="text" id="txt" value="请输入“二货”名称">
-              <button class="searchbtn">搜 索</button>
+              <div class="row">
+                  <div class="input-group">
+                    <input type="text" placeholder="请输入“二货”名称" class="form-control">
+                    <button class="searchbtn" type="button">搜 索</button>
+                  </div>
+              </div>
+              
           </div>
         </div>
         <div class="goodslist">
@@ -27,9 +36,11 @@ import {mapGetters} from 'vuex'
         created(){
             this.$store.dispatch('changeShow','shop')   //导航栏切换
         },
-        computed:mapGetters({
-            goods:'getGoods'
-        })
+        computed:{
+            ...mapGetters({
+                classis:'getClassis'
+            })
+        }
     }
 </script>
 
@@ -38,7 +49,6 @@ import {mapGetters} from 'vuex'
         width: 1150px;
         margin:0 auto;
         display: flex;
-        /* border: 1px solid red */
     }
     .shop:after{
         width: 0;
@@ -49,8 +59,21 @@ import {mapGetters} from 'vuex'
     }
     .classify{
         width: 150px;
-        height: 900px;
         background-color: #3d444c;
+    }
+    .classify ul li{
+        border-bottom: 1px solid black;
+        height: 50px;
+        line-height: 50px;
+        text-align: center;
+    }
+    .classify ul li{
+        color: #fff;
+        cursor: pointer;
+    }
+    .classify ul li:hover{
+        color:#00bc9b;
+        background: #2a2e33;
     }
     .goodswrap{
         width: 1000px;
@@ -74,18 +97,30 @@ import {mapGetters} from 'vuex'
         color: #666;
         font: 14px/32px "微软雅黑";
     }
-    .search button{
+    .searchbtn{
         float: right;
         width: 80px;
-        height: 36px;
+        height: 34px;
         background-color: #3d444c;
         color: #fff;
         font: 16px/36px "微软雅黑";
         cursor: pointer;
         border: none;
         padding: 0;
-        margin: 0;
+        margin-left: 2px;
         outline-style: none;
+        border-radius: 5px;
+    }
+    .searchbtn:hover{
+        color: #00bc9b;
+        background: #2a2e33;
+    }
+    .markDelete{
+        position: absolute;
+        top: 32px;
+        left: 670px;
+        color: #666;
+        cursor: pointer;
     }
 </style>
 

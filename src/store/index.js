@@ -1,10 +1,11 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import { stat } from 'fs';
 
 Vue.use(Vuex)
 
 const state = {
-	loginway: '',
+	loginway: 'login',
 	show: 'home',
 	clientheight: 0,
 	clientwidth: 0,
@@ -25,6 +26,19 @@ const state = {
 	ahuterArr:[
 		{name:'ahtuer1',src:'../static/images/ahuter1.jpg'},
 		{name:'ahuter2',src:'../static/images/ahuter2.jpg'},
+	],
+	classis:[
+		{title:'商品分类'},
+		{title:'书  籍'},
+		{title:'手  机'},
+		{title:'衣鞋伞帽'},
+		{title:'电  脑'},
+		{title:'配  件'},
+		{title:'电  器'},
+		{title:'代  步'},
+		{title:'娱  乐'},
+		{title:'运动健身'},
+		{title:'其  他'}				
 	],
 	goods: [
 		//商品信息
@@ -185,9 +199,19 @@ const state = {
 	],
 	selectedItem: {},
 	sessionSelectedItem: {},
-	cart: []
+	cart: [],
+	isLogin:0,
+	user:{}
 }
 const mutations = {
+	CHANGE_USER(state,data){
+		for(var key in data){
+			state.user[key]=data[key];
+		}
+	},
+	CHANGE_LOGIN(state,data){
+		state.isLogin=data;
+	},
 	CHANGE_HW(state, obj) {
 		state.clientwidth = obj.w;
 		state.clientheight = obj.h;
@@ -336,6 +360,13 @@ const actions = {
 	}
 }
 const getters = {
+	getUser:function(state){
+		var result={}
+		for(var key in state.user){
+			result[key]=state.user[key]
+		}
+		return result
+	},
 	getHW: function (state) {
 		return {
 			h: state.clientheight,
@@ -375,6 +406,12 @@ const getters = {
 	},
 	getAhuter:function(state){
 		return state.ahuterArr
+	},
+	getClassis:function(state){
+		return state.classis
+	},
+	getIsLogin:function(state){
+		return state.isLogin
 	}
 }
 export default new Vuex.Store({

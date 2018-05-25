@@ -4,7 +4,7 @@
           <h1 :style="{height:home_first_height_margin+'px',lineHeight:home_first_height_margin+'px'}">安工大淘淘乐</h1>
           <router-link to="/" tag="img" src="../static/images/kaws.jpg" alt="kaws" class="kaws"></router-link>
       </div>
-      <div class="container" :style="{height:home_first_height+'px'}">
+      <div class="imgcontainer" :style="{height:home_first_height+'px'}">
           <div class="wrapper" :style="{width:originalData.img_width+'px',height:originalData.img_height+'px',top:home_first_height_margin-20+'px'}" @mouseover="stop" @mouseout="play">
               <div class="wrapper-content" :class="{wrapper_trans:isTrans}" :style="{width:originalData.img_width*(originalData.num+2)+'px',height:originalData.img_height+'px',left:-originalData.img_width+'px'}" ref="wrapperContent">
                   <img class="wrapper-content_img" alt="4" :src="'../static/images/home_4.jpg'" :style="{width:originalData.img_width+'px',height:originalData.img_height+'px'}"/>
@@ -189,7 +189,7 @@ export default {
   height: 300px;
   height: 300px;
 }
-.container {
+.imgcontainer {
   margin-left: 400px;
 }
 

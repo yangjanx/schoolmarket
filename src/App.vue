@@ -3,9 +3,11 @@
     <header>
       <div class="login_top">
         <ul class="login_nav">
-          <li><router-link to="/cart">购物车({{cart.length}})</router-link></li>
-          <li @click="changeLoginway('login')"><router-link to="/login" class="login">登录</router-link></li>
-          <li @click="changeLoginway('register')"><router-link to="/login" class="register">注册</router-link></li>
+          <li><router-link to="/cart" class="login">购物车({{cart.length}})</router-link></li>
+          <li @click="changeLoginway('login')" v-if="isLogin==0"><router-link to="/login" class="login">登录&nbsp;Login</router-link></li>
+          <li @click="changeLoginway('register')" v-if="isLogin==0"><router-link to="/login" class="register">注册&nbsp;Register</router-link></li>
+          <li v-if="isLogin==1"><router-link to="/usercenter">你好，<span class="nick">{{user.nick}}</span></router-link></li>
+          <li @click="Logout()" v-if="isLogin==1"><router-link to="/home" class="login">注销</router-link></li>
         </ul>
       </div>
       <div class="nav">
@@ -59,13 +61,22 @@ export default {
       items: "getFootItems",
       cart: "getCart",
       left_navs: "getLeft_nav",
-      right_navs: "getRight_nav"
+      right_navs: "getRight_nav",
+      isLogin:"getIsLogin",
+      user:"getUser"
     })
   },
   mounted() {
     window.addEventListener("scroll", this.handleScroll);
   },
   methods: {
+    Logout(){
+      this.$store.commit('CHANGE_LOGIN','0');
+      layer.msg('注销成功!');
+      setTimeout(function(){
+        window.location.reload();
+      },1000)
+    },
     toTop() {
       var gotoTop = function() {
         var currentPosition =
@@ -121,6 +132,11 @@ export default {
         this.scroll = false;
       }
     };
+    //将vuex中的数据存入浏览器缓存中，以解决刷新后数据丢失的问题
+    localStorage.getItem("storeMsg") && this.$store.replaceState(Object.assign(this.$store.state,JSON.parse(localStorage.getItem("storeMsg"))));
+    window.addEventListener("beforeunload",()=>{
+        localStorage.setItem("storeMsg",JSON.stringify(this.$store.state))
+    })
   }
 };
 </script>
@@ -182,6 +198,9 @@ a {
   text-decoration: none;
   color: black;
 }
+a:hover{
+  text-decoration: none
+}
 a:focus,
 input,
 button,
@@ -212,6 +231,12 @@ input {
 }
 #app {
   width: 100%;
+}
+.nick{
+  color: #13f5cd;
+}
+.nick:hover{
+  text-decoration: underline
 }
 header {
   height: 120px;

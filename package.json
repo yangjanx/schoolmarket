@@ -12,6 +12,7 @@
   "dependencies": {
     "axios": "^0.18.0",
     "body-parser": "^1.18.2",
+    "bootstrap": "^4.1.1",
     "element-ui": "^2.3.4",
     "express": "^4.16.3",
     "mysql": "^2.15.0",
@@ -49,6 +50,7 @@
     "uglifyjs-webpack-plugin": "^1.1.1",
     "url-loader": "^0.5.8",
     "vue-loader": "^13.3.0",
+    "vue-resource": "^1.5.0",
     "vue-style-loader": "^3.0.1",
     "vue-template-compiler": "^2.5.2",
     "webpack": "^3.6.0",
