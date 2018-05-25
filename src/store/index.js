@@ -40,163 +40,7 @@ const state = {
 		{title:'运动健身'},
 		{title:'其  他'}				
 	],
-	goods: [
-		//商品信息
-		{
-			src: '../static/images/goods_7.jpg',
-			title: 'Staple 联名 V/Sual MA1 鸽子 裸女 飞行员空军夹克外套',
-			shopsSrc: '../static/images/shops_1.jpg',
-			shopsName: 'jenry',
-			price: 679,
-			isLike: true,
-			likes: 10,
-			flag: false,
-			num: 1,
-			description: '版型选择中长款MA1进行改良 合身塑形 •使用杜邦梭织面料，抗风防水耐磨 •内里填充300克重鸭绒，恒温保暖 •胸口定制四个联名胸章 玩味十足 •DIE WELLE 延续秋冬沙漠主题将SAHARA之眼至于肩覆水，并将石莲花与TEAMAGE标志性玫瑰花置于左臂与面料质感形成强烈对比',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-		{
-			src: '../static/images/goods_8.jpg',
-			title: 'MOSTWANTEDLAB 2016AW MWTD 植绒印花MA1飞行员夹克棉衣外套',
-			shopsSrc: '../static/images/shops_2.jpg',
-			shopsName: '买物教室',
-			price: 499,
-			isLike: true,
-			likes: 5,
-			flag: false,
-			num: 1,
-			description: '大家都喜欢吃披萨，当然喵星人也不例外，萌猫躲在披萨里头仿佛在向主人抗议，简直萌化了。这件Stay gold 三色贪吃猫披萨卫衣正面采用刺绣工艺，完美呈现披萨拉丝效果，而且采用10支350克加绒面料，兼具舒适性和保暖性。',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-		{
-			src: '../static/images/goods_9.jpg',
-			title: 'FTW FORTHEWIN M65 JTK 秋冬男重度水洗军事风四口袋工装夹克外套',
-			shopsSrc: '../static/images/shops_1.jpg',
-			price: 380,
-			shopsName: 'jenry',
-			isLike: true,
-			likes: 5,
-			flag: false,
-			num: 1,
-			description: '外星人系列。春秋教练夹克，白蓝黑红四色任意挑选。胸前的外星人设计，更显年轻时尚，街头范十足。冲锋衣面料，防水透气，穿着舒适，相比同类的冲锋衣夹克，这款性价比更高。推荐入手。',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-		{
-			src: '../static/images/goods_4.jpg',
-			title: '[PAPERWORKS]沙丁鱼罐头食物系列苹果i7/6/6S/plus原创全包手机壳',
-			shopsSrc: '../static/images/shops_3.jpg',
-			shopsName: 'QW',
-			price: 119,
-			isLike: true,
-			likes: 10,
-			flag: false,
-			num: 1,
-			description: '版型选择中长款MA1进行改良 合身塑形 •使用杜邦梭织面料，抗风防水耐磨 •内里填充300克重鸭绒，恒温保暖 •胸口定制四个联名胸章 玩味十足 •DIE WELLE 延续秋冬沙漠主题将SAHARA之眼至于肩覆水，并将石莲花与TEAMAGE标志性玫瑰花置于左臂与面料质感形成强烈对比',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-		{
-			src: '../static/images/goods_5.jpg',
-			title: 'SSUR Plus 16秋冬新款 背后大字母 喷染 卫衣 帽衫 情侣',
-			shopsSrc: '../static/images/shops_2.jpg',
-			shopsName: 'QW',
-			price: 698,
-			isLike: true,
-			likes: 5,
-			flag: false,
-			num: 1,
-			description: '大家都喜欢吃披萨，当然喵星人也不例外，萌猫躲在披萨里头仿佛在向主人抗议，简直萌化了。这件Stay gold 三色贪吃猫披萨卫衣正面采用刺绣工艺，完美呈现披萨拉丝效果，而且采用10支350克加绒面料，兼具舒适性和保暖性。',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-		{
-			src: '../static/images/goods_6.jpg',
-			title: '羽绒道袍保暖棉衣和服外套mdns 16aw',
-			shopsSrc: '../static/images/shops_1.jpg',
-			price: 428,
-			shopsName: 'jenry',
-			isLike: true,
-			likes: 5,
-			flag: false,
-			num: 1,
-			description: '外星人系列。春秋教练夹克，白蓝黑红四色任意挑选。胸前的外星人设计，更显年轻时尚，街头范十足。冲锋衣面料，防水透气，穿着舒适，相比同类的冲锋衣夹克，这款性价比更高。推荐入手。',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-		{
-			src: '../static/images/goods_1.jpg',
-			title: 'DIE WELLE X TEAMAGE 联名款冲锋羽绒服 撒哈拉之眼 长款MA1 棉服',
-			shopsSrc: '../static/images/shops_1.jpg',
-			shopsName: 'jenry',
-			price: 679,
-			isLike: true,
-			likes: 10,
-			flag: false,
-			num: 1,
-			description: '版型选择中长款MA1进行改良 合身塑形 •使用杜邦梭织面料，抗风防水耐磨 •内里填充300克重鸭绒，恒温保暖 •胸口定制四个联名胸章 玩味十足 •DIE WELLE 延续秋冬沙漠主题将SAHARA之眼至于肩覆水，并将石莲花与TEAMAGE标志性玫瑰花置于左臂与面料质感形成强烈对比',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-		{
-			src: '../static/images/goods_2.jpg',
-			title: '玩味十足！Stay gold  贪吃猫圆领披萨卫衣',
-			shopsSrc: '../static/images/shops_2.jpg',
-			shopsName: '买物教室',
-			price: 199,
-			isLike: true,
-			likes: 5,
-			flag: false,
-			num: 1,
-			description: '大家都喜欢吃披萨，当然喵星人也不例外，萌猫躲在披萨里头仿佛在向主人抗议，简直萌化了。这件Stay gold 三色贪吃猫披萨卫衣正面采用刺绣工艺，完美呈现披萨拉丝效果，而且采用10支350克加绒面料，兼具舒适性和保暖性。',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-		{
-			src: '../static/images/goods_3.jpg',
-			title: 'SOMETHNEW WTAPS原宿风格 纯色基础款打底抓绒套头圆领卫衣',
-			shopsSrc: '../static/images/shops_1.jpg',
-			price: 199,
-			shopsName: 'jenry',
-			isLike: true,
-			likes: 5,
-			flag: false,
-			num: 1,
-			description: '外星人系列。春秋教练夹克，白蓝黑红四色任意挑选。胸前的外星人设计，更显年轻时尚，街头范十足。冲锋衣面料，防水透气，穿着舒适，相比同类的冲锋衣夹克，这款性价比更高。推荐入手。',
-			sizes: ['S', 'M', 'L', 'XL'],
-			size: '',
-			colors: ['黑色', '白色', '红色', '灰色'],
-			color: '',
-			completed: false//用来检测购物车中是否选中
-		},
-
-	],
+	goods:{},
 	selectedItem: {},
 	sessionSelectedItem: {},
 	cart: [],
@@ -207,6 +51,11 @@ const mutations = {
 	CHANGE_USER(state,data){
 		for(var key in data){
 			state.user[key]=data[key];
+		}
+	},
+	CHANGE_GOODS(state,data){
+		for(var key in data){
+			state.goods[key]=data[key];
 		}
 	},
 	CHANGE_LOGIN(state,data){
@@ -367,6 +216,13 @@ const getters = {
 		}
 		return result
 	},
+	getGoods: function (state) {
+		var result={}
+		for(var key in state.goods){
+			result[key]=state.goods[key]
+		}
+		return result
+	},
 	getHW: function (state) {
 		return {
 			h: state.clientheight,
@@ -391,9 +247,6 @@ const getters = {
 	},
 	getNews: function (state) {
 		return state.news;
-	},
-	getGoods: function (state) {
-		return state.goods
 	},
 	getSelectedItem: function (state) {
 		return state.selectedItem

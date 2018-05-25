@@ -106,35 +106,35 @@ export default {
         if (result == null) return false;
         return true;
       }
-      function checktruename(str){
-          var result = str.match(/^[\u4E00-\u9FA5]{2,4}$/);
-          if (result == null) return false;
-          return true;
+      function checktruename(str) {
+        var result = str.match(/^[\u4E00-\u9FA5]{2,4}$/);
+        if (result == null) return false;
+        return true;
       }
-      function checkage(str){
-          var result=str.toString().match(/^[0-9]{1,2}$/);
-          if (result == null) return false;
-          return true;
+      function checkage(str) {
+        var result = str.toString().match(/^[0-9]{1,2}$/);
+        if (result == null) return false;
+        return true;
       }
-      function checkinstitute(str){
-          var result = str.match(/^[\u4E00-\u9FA5]{1,12}$/);
-          if (result == null) return false;
-          return true;
+      function checkinstitute(str) {
+        var result = str.match(/^[\u4E00-\u9FA5]{1,12}$/);
+        if (result == null) return false;
+        return true;
       }
-      function checkphone(str){
-          var result = str.match(/^[1][3,4,5,6,7,8,9][0-9]{9}$/);
-          if (result == null) return false;
-          return true;
+      function checkphone(str) {
+        var result = str.match(/^[1][3,4,5,6,7,8,9][0-9]{9}$/);
+        if (result == null) return false;
+        return true;
       }
-      function checkqq(str){
-          var result = str.match(/^[1-9][0-9]{4,10}$/);
-          if (result == null) return false;
-          return true;
+      function checkqq(str) {
+        var result = str.match(/^[1-9][0-9]{4,10}$/);
+        if (result == null) return false;
+        return true;
       }
-      function checkwechat(str){
-          var result=str.match(/^[-_a-zA-Z0-9]{6,20}$/);
-          if (result == null) return false;
-          return true;
+      function checkwechat(str) {
+        var result = str.match(/^[-_a-zA-Z0-9]{6,20}$/);
+        if (result == null) return false;
+        return true;
       }
       var nick = this.usernick;
       if (!checknick(nick)) {
@@ -143,34 +143,34 @@ export default {
       }
       var id = this.$store.state.user.id;
       var truename = this.usertruename;
-      if(!checktruename(truename)){
-          layer.msg("修改失败，真实姓名只能包括2-4个中文！");
-          return;
+      if (!checktruename(truename)) {
+        layer.msg("修改失败，真实姓名只能包括2-4个中文！");
+        return;
       }
       var age = this.userage;
-      if(!checkage(age)){
-          layer.msg("修改失败，年龄区间为0-99岁！");
-          return;
+      if (!checkage(age)) {
+        layer.msg("修改失败，年龄区间为0-99岁！");
+        return;
       }
       var institute = this.userinstitute;
-      if(!checkinstitute(institute)){
-          layer.msg("修改失败，请输入1-12个中文的学院名称！");
-          return;
+      if (!checkinstitute(institute)) {
+        layer.msg("修改失败，请输入1-12个中文的学院名称！");
+        return;
       }
       var phone = this.userphone;
-      if(!checkphone(phone)){
-          layer.msg("修改失败，请输入格式正确的手机号码！");
-          return;
+      if (!checkphone(phone)) {
+        layer.msg("修改失败，请输入格式正确的手机号码！");
+        return;
       }
       var qq = this.userqq;
-      if(!checkqq(qq)){
-          layer.msg("修改失败，请输入5-11位的QQ号码！");
-          return;
+      if (!checkqq(qq)) {
+        layer.msg("修改失败，请输入5-11位的QQ号码！");
+        return;
       }
       var wechat = this.userwechat;
-      if(!checkwechat(wechat)){
-          layer.msg("修改失败，请输入6-20位的微信号！");
-          return;
+      if (!checkwechat(wechat)) {
+        layer.msg("修改失败，请输入6-20位的微信号！");
+        return;
       }
       var that = this;
       this.$http
@@ -189,13 +189,10 @@ export default {
           {}
         )
         .then(response => {
-          if (response.body.code == -1) {
-            alert(response.body.msg);
-          } else {
-            that.$store.commit("CHANGE_USER", {
-              institute: that.userinstitute
-            });
-          }
+          that.$store.commit("CHANGE_USER", {
+            institute: that.userinstitute,
+            age: that.userage
+          });
           layer.msg("修改成功！");
           setTimeout(function() {
             window.location.reload();
@@ -215,7 +212,7 @@ export default {
 .contactprofile {
   width: 400px;
   margin: 50px auto;
-  border-top: 1px solid skyblue;
+  border-top: 1px solid #00a2e4;
   position: relative;
 }
 .basic,
@@ -224,8 +221,8 @@ export default {
   height: 36px;
   text-align: center;
   line-height: 36px;
-  background: #f1f1f1;
-  color: skyblue;
+  background: #fff;
+  color: #00a2e4;
   position: absolute;
   top: -20px;
   left: 150px;

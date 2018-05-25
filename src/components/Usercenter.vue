@@ -1,4 +1,5 @@
 <template>
+<div class="body">
     <div class="usercenter">
         <div class="user_left">
             <div class="userinfo">
@@ -31,6 +32,7 @@
             <router-view></router-view>
         </div>
     </div>
+</div>
 </template>
 
 <script>
@@ -67,8 +69,11 @@ export default {
 </script>
 
 <style scoped>
-    .userinfo,.usermenu,.user_right{
+    .body{
         background: #f1f1f1
+    }
+    .userinfo,.usermenu,.user_right{
+        background: #fff
     }
     .usercenter{
         width: 1150px;
@@ -88,6 +93,7 @@ export default {
     .userinfo{
         height: 180px;
         text-align: left;
+        margin-top: 10px;
         border-radius: 10px
     }
     .portrait,.user-info,.collection,.nick{
@@ -137,8 +143,9 @@ export default {
         color: orange;
     }
     .usermenu{
-        height: 562px;
+        height: 542px;
         margin-top: 15px;
+        margin-bottom: 10px;
         text-align: center;
         color: #887e7e;
         font-weight: 550;
@@ -176,8 +183,12 @@ export default {
     }
     .user_right{
         width: 878px;
-        height: 757px;
+        height: 737px;
+        border-top: 1px solid #f1f1f1;
+        border-bottom: 1px solid #f1f1f1;
         margin-left: 15px;
+        margin-top: 10px;
+        margin-bottom: 10px;
         border-radius: 10px;
     }
 </style>
