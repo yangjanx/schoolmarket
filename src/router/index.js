@@ -14,8 +14,8 @@ import Personalprofile from '@/components/Personalprofile'
 import Modifypsd from '@/components/Modifypsd'
 import Orderhistory from '@/components/Orderhistory'
 import Mycomment from '@/components/Mycomment'
-import Follow from '@/components/Follow'
 import Collection from '@/components/Collection'
+import Mypublication from '@/components/Mypublication'
 
 Vue.use(Router)
 
@@ -46,14 +46,14 @@ export default new Router({
     {
       path: '/usercenter',
       component: Usercenter,
-      redirect:'/orderhistory',
+      redirect:'/personalprofile',
       children:[
         {path:'/orderhistory',component:Orderhistory},
         {path:'/mycomment',component:Mycomment},
         {path:'/personalprofile',component:Personalprofile},
         {path:'/modifypsd',component:Modifypsd},
-        {path:'/follow',component:Follow},
-        {path:'/collection',component:Collection}
+        {path:'/collection',component:Collection},
+        {path:'/mypublication',component:Mypublication}
       ],
       meta:{auth:true} //设置当前路由需要校验
     },

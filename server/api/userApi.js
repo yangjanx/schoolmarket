@@ -10,7 +10,7 @@ var UUID = require('uuid')
 
 var storage = multer.diskStorage({  
     destination: function (req, file, cb) {  
-        cb(null, 'public/uploads')  
+        cb(null, 'static/public/uploads')  
     },  
     filename: function (req, file, cb) {  
         var str = file.originalname.split('.');  
@@ -152,7 +152,7 @@ router.post('/addGoods',upload.array('file',3), (req, res) => {
     conn.query("insert into goods(goods_id,goods_name,goods_originprice,goods_price,classify_id,goods_recommend,goods_picture,goods_sellerid) values(?,?,?,?,?,?,?,?)", [UUID.v1(),params.goodsname,params.oldprice,params.price,params.goodstype,params.recommend,goods_picture,params.sellerid], function (err, result) {
         if (err) {
             for(var i=0;i<req.files.length;i++){
-                fs.unlinkSync('public/uploads/'+req.files[i].filename)
+                fs.unlinkSync('static/public/uploads/'+req.files[i].filename)
             }
             console.log(err);
         }
@@ -170,6 +170,23 @@ router.post('/getClassifyOptions', (req, res) => {
         }
         if (result) {
             jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/uploadheadphoto',upload.single('file'), (req, res) => {
+    var params = req.body;
+    try{
+        fs.unlinkSync('static/public/uploads/'+params.oldheadphoto);
+    }catch(e){}
+    conn.query("update user set headphoto=? where user_id=?", [req.file.filename,params.id], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, {
+                'headphoto':req.file.filename
+            });
         }
     })
 });

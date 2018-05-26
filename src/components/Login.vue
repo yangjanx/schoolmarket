@@ -94,7 +94,9 @@ export default {
               nick: response.body[0].user_nick,
               id:response.body[0].user_id,
               gender:response.body[0].gender,
-              age:response.body[0].age              
+              age:response.body[0].age,
+              headphoto:response.body[0].headphoto,
+              institute:response.body[0].institute          
             });
             layer.msg("登录成功！");
             setTimeout(function() {

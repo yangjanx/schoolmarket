@@ -1,13 +1,13 @@
 <template>
   <div class="publish">
           <div class="input_div">
-              <input type="text" placeholder="请输入商品名称，30字以内" class="input_top input_normal" v-model="goodsname">
+              <input type="text" placeholder="请输入商品名称，30字以内" class="input_top input_normal" maxlength="30" v-model="goodsname">
           </div>
           <div class="goodsprice">
               <span class="input-group-addon" id="basic-addon1">￥</span>
-              <input type="text" placeholder="商品原始价" class="input_middle input_normal" v-model="oldprice">
+              <input type="text" placeholder="商品原始价(>0,可跟两位小数)" class="input_middle input_normal" v-model="oldprice">
               <span class="input-group-addon aaa" id="basic-addon1">￥</span>
-              <input type="text" placeholder="商品现卖价" class="input_middle input_normal" v-model="price">
+              <input type="text" placeholder="商品现卖价(>0,可跟两位小数)" class="input_middle input_normal" v-model="price">
           </div>
           <div class="goodstype">
               <span class="input-group-addon" id="basic-addona">请选择商品类别</span>
@@ -17,7 +17,7 @@
               </select>
           </div>
           <div class="input_div">
-              <textarea type="text" placeholder="请输入商品介绍，200字以内" class="input_bottom" v-model="recommend"></textarea>
+              <textarea type="text" placeholder="请输入商品介绍，200字以内" class="input_bottom" maxlength="200" v-model="recommend"></textarea>
           </div>
           <div class="goodspic">
             <p>商品图片（ 0~3 张）</p>
@@ -58,7 +58,7 @@ export default {
     this.$store.dispatch("changeShow", "publish");
     this.$http.post('api/user/getClassifyOptions',{},{})
     .then(response=>{
-that.options=response.body;
+      that.options=response.body;
     })
   },
   methods: {
@@ -78,9 +78,22 @@ that.options=response.body;
       };
     },
     addGoods(){
+      function checkprice(str) {
+        var result = str.match(/^[1-9]{1}\d*(.\d{1,2})?$|^0.\d{1,2}$/); //检验价格,>0,可跟两位小数
+        if (result == null) return false;
+        return true;
+      }
       var goodsname=this.goodsname;
       var oldprice=this.oldprice;
+      if (!checkprice(oldprice)) {
+        layer.msg("请输入正确的商品价格！", function() {});
+        return;
+      }
       var price=this.price;
+      if (!checkprice(price)) {
+        layer.msg("请输入正确的商品价格！", function() {});
+        return;
+      }
       var goodstype=this.goodstype;
       var recommend=this.recommend;
       var sellerid=this.$store.state.user.id;
@@ -106,7 +119,7 @@ that.options=response.body;
         // });
         layer.msg('发布商品成功!');
         setTimeout(function() {
-          that.$router.push({ path: "/home" });
+          that.$router.push({ path: "/mypublication" });
           window.location.reload();
         }, 1000);
       })
