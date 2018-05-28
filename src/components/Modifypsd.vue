@@ -69,7 +69,7 @@ export default {
 
 <style scoped>
   .container{
-    width: 878px;
+    width: 700px;
     height: 747px;
   }
   .modifypsd{

@@ -17,7 +17,10 @@
           <button class="edit" @click="change_input('3','show')">编 辑</button><br><br>
           <label class="a">所在学院：&emsp;</label><div class="b4">{{userinstitute}}</div>
           <input type="text" class="form-control" id="c4" v-model="userinstitute" @blur="change_input('4','')">
-          <button class="edit" @click="change_input('4','show')">编 辑</button>
+          <button class="edit" @click="change_input('4','show')">编 辑</button><br><br>
+          <label class="a">个性签名：&emsp;</label><div class="b10">{{userselfsign}}</div>
+          <input type="text" class="form-control" id="c10" v-model="userselfsign" @blur="change_input('10','')" maxlength="15">
+          <button class="edit" @click="change_input('10','show')">编 辑</button>
       </div>
       <div class="contactprofile">
           <p class="contact">联系资料</p><br><br>
@@ -48,7 +51,8 @@ export default {
       userqq: "",
       userwechat: "",
       userid: "",
-      usergender: ""
+      usergender: "",
+      userselfsign:''
     };
   },
   created: function() {
@@ -65,15 +69,16 @@ export default {
         if (response.body.code == -1) {
           alert(response.body.msg);
         } else {
-          (that.usernick = response.body[0].user_nick),
-            (that.usertruename = response.body[0].true_name),
-            (that.userage = response.body[0].age),
-            (that.userinstitute = response.body[0].institute),
-            (that.userphone = response.body[0].phone),
-            (that.userqq = response.body[0].qq),
-            (that.userwechat = response.body[0].wechat),
-            (that.userid = response.body[0].user_id),
-            (that.usergender = response.body[0].gender);
+            that.usernick = response.body[0].user_nick,
+            that.usertruename = response.body[0].true_name,
+            that.userage = response.body[0].age,
+            that.userinstitute = response.body[0].institute,
+            that.userphone = response.body[0].phone,
+            that.userqq = response.body[0].qq,
+            that.userwechat = response.body[0].wechat,
+            that.userid = response.body[0].user_id,
+            that.usergender = response.body[0].gender,
+            that.userselfsign = response.body[0].selfsign;
         }
       });
   },
@@ -172,6 +177,7 @@ export default {
         layer.msg("修改失败，请输入6-20位的微信号！");
         return;
       }
+      var selfsign = this.userselfsign;
       var that = this;
       this.$http
         .post(
@@ -184,14 +190,17 @@ export default {
             phone: phone,
             qq: qq,
             wechat: wechat,
-            id: id
+            id: id,
+            selfsign:selfsign
           },
           {}
         )
         .then(response => {
           that.$store.commit("CHANGE_USER", {
             institute: that.userinstitute,
-            age: that.userage
+            age: that.userage,
+            selfsign:that.userselfsign,
+            nick:that.usernick
           });
           layer.msg("修改成功！");
           setTimeout(function() {
@@ -205,7 +214,7 @@ export default {
 
 <style scoped>
 .container {
-  width: 878px;
+  width: 700px;
   height: 747px;
 }
 .basicprofile,
@@ -248,7 +257,8 @@ export default {
 .b6,
 .b7,
 .b8,
-.b9 {
+.b9,
+.b10 {
   display: inline-block;
   font-size: 15px;
 }
@@ -263,6 +273,11 @@ export default {
 #c9 {
   display: none;
   width: 180px;
+  height: 28px;
+}
+#c10{
+  display: none;
+  width: 250px;
   height: 28px;
 }
 .edit {

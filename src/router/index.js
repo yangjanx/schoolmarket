@@ -32,16 +32,10 @@ export default new Router({
       path: '/shop',
       component: Shop,
       children:[
-        {path:'/',component:Shoplist}
+        {path:'/',component:Shoplist},
+        {path:'/shopitem',component:Shopitem},
+        {path:'/searchresult',component:Searchresult}
       ]
-    },
-    {
-      path: '/searchresult',
-      component: Searchresult
-    },
-    {
-      path: '/shopitem',
-      component: Shopitem
     },
     {
       path: '/usercenter',

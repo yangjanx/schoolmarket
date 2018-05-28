@@ -5,13 +5,13 @@
             <div class="userinfo">
                 <input type="file" id="upload" @change="addImg" style="display:none;">
                 <div class="portrait">
-                    <img :src="[user.headphoto?('static/public/uploads/'+user.headphoto):('static/images/touxiang.jpg')]" width="80" height="80" title="点击修改头像" id="head" @click="changeHead">
+                    <img :src="[user.headphoto?('static/public/uploads/'+user.headphoto):('static/images/touxiang.jpg')]" width="90" height="90" title="点击修改头像" id="head" @click="changeHead">
                 </div>
                 <div class="user-info">
                     <div class="nick" v-text="user.nick"></div>
-                    <div class="uid" v-text="'ID:'+user.id"></div>
+                    <div class="uid" v-text="'ID：'+user.id"></div>
                     <div class="collectionwrap">
-                        <div class="collection"><router-link to="/collection">我的收藏（ {{collectionNumber}} ）</router-link></div>
+                        <div class="collection"><router-link to="/collection">已收藏的宝贝[ {{collectionNumber}} ]</router-link></div>
                     </div>
                 </div>
                 <div class="selfintro">
@@ -21,12 +21,13 @@
                     <span>|</span>
                     <span>{{user.institute}}学院</span>
                 </div>
+                <div class="selfword">{{user.selfsign}}</div>
             </div>
             <div class="usermenu">
                 <ul class="menu-ul">
                     <router-link class="menu-link" to="/personalprofile" tag="li">Personal Profile</router-link>
-                    <router-link class="menu-link" to="/orderhistory" tag="li">Order History</router-link>
                     <router-link class="menu-link" to="/mypublication" tag="li">My Publication</router-link>
+                    <router-link class="menu-link" to="/orderhistory" tag="li">Order History</router-link>
                     <router-link class="menu-link" to="/mycomment" tag="li">My Reviews</router-link>
                     <router-link class="menu-link" to="/modifypsd" tag="li">Modify Password</router-link>
                 </ul>
@@ -44,7 +45,6 @@ import { mapGetters } from "vuex";
 export default {
   data() {
     return {
-      followNumber: 12,
       collectionNumber: 7
     };
   },
@@ -80,6 +80,7 @@ export default {
           that.$store.commit('CHANGE_USER',{
               headphoto:response.body.headphoto
           })
+          layer.msg("修改头像成功！");
         setTimeout(function() {
           window.location.reload();
         }, 1000);
@@ -99,7 +100,7 @@ export default {
   background: #fff;
 }
 .usercenter {
-  width: 1150px;
+  width: 1015px;
   margin: 0 auto;
   display: flex;
 }
@@ -111,10 +112,10 @@ export default {
   content: "";
 }
 .user_left {
-  width: 280px;
+  width: 300px;
 }
 .userinfo {
-  height: 180px;
+  height: 222px;
   text-align: left;
   margin-top: 10px;
   border-radius: 10px;
@@ -126,18 +127,18 @@ export default {
   display: inline-block;
 }
 .portrait {
-  width: 80px;
-  height: 80px;
+  width: 90px;
+  height: 90px;
   overflow: hidden;
-  border-radius: 40px;
+  border-radius: 45px;
   background-color: #ccc;
-  margin: 30px 15px 0 15px;
+  margin: 30px 0 0 20px;
   cursor: pointer;
 }
 .user-info {
-  height: 80px;
+  height: 90px;
   width: 140px;
-  margin: 30px 0 0 0;
+  margin: 32px 0 0 20px;
   vertical-align: top;
 }
 .nick {
@@ -150,17 +151,18 @@ export default {
   font-weight: bold;
   text-decoration: none;
   font-size: 18px;
-}
-.uid,
-.collectionwrap {
-  margin-top: 5px;
+  height: 30px;
+  line-height: 30px;
 }
 .uid {
   font-weight: 400;
+  height: 30px;
+  line-height: 30px;
 }
 .collectionwrap {
   white-space: nowrap;
-  margin-top: 8px;
+  height: 30px;
+  line-height: 30px;
 }
 .collection a {
   color: orangered;
@@ -170,7 +172,7 @@ export default {
   color: orange;
 }
 .usermenu {
-  height: 542px;
+  height: 500px;
   margin-top: 15px;
   margin-bottom: 10px;
   text-align: center;
@@ -202,14 +204,23 @@ export default {
   background-color: #8decdc;
 }
 .selfintro {
-  height: 45px;
-  line-height: 45px;
-  width: 240px;
+  height: 40px;
+  line-height: 40px;
+  width: 250px;
   margin: 5px auto;
   text-align: center;
 }
+.selfword{
+  height: 30px;
+  line-height: 30px;
+  font-size: 13px;
+  color: #777;
+  text-align: center;
+  width: 250px;
+  margin: 0 auto;
+}
 .user_right {
-  width: 878px;
+  width: 700px;
   height: 737px;
   border-top: 1px solid #f1f1f1;
   border-bottom: 1px solid #f1f1f1;

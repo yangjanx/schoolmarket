@@ -7,6 +7,7 @@ var multer = require('multer');
 var fs = require('fs');
 var path = require('path')
 var UUID = require('uuid')
+var datetime=require('silly-datetime');
 
 var storage = multer.diskStorage({  
     destination: function (req, file, cb) {  
@@ -90,7 +91,7 @@ router.post('/login', (req, res) => {
 
 router.post('/editProfile', (req, res) => {
     var params = req.body;
-    conn.query("update user set user_nick=?,true_name=?,phone=?,age=?,institute=?,qq=?,wechat=? where user_id=?", [params.nick, params.truename, params.phone, params.age, params.institute, params.qq, params.wechat, params.id], function (err, result) {
+    conn.query("update user set user_nick=?,true_name=?,phone=?,age=?,institute=?,qq=?,wechat=?,selfsign=? where user_id=?", [params.nick, params.truename, params.phone, params.age, params.institute, params.qq, params.wechat,params.selfsign,params.id], function (err, result) {
         if (err) {
             console.log(err);
         }
@@ -103,6 +104,18 @@ router.post('/editProfile', (req, res) => {
 router.post('/getUserinfo', (req, res) => {
     var params = req.body;
     conn.query("select *from user where user_id=?", [params.id], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/getGoodsinfo', (req, res) => {
+    var params = req.body;
+    conn.query("select *from v_goods order by goods_addtime DESC", [], function (err, result) {
         if (err) {
             console.log(err);
         }
@@ -149,7 +162,7 @@ router.post('/addGoods',upload.array('file',3), (req, res) => {
         goods_picture += req.files[i].filename+'#'
     }
     goods_picture += req.files[i].filename;
-    conn.query("insert into goods(goods_id,goods_name,goods_originprice,goods_price,classify_id,goods_recommend,goods_picture,goods_sellerid) values(?,?,?,?,?,?,?,?)", [UUID.v1(),params.goodsname,params.oldprice,params.price,params.goodstype,params.recommend,goods_picture,params.sellerid], function (err, result) {
+    conn.query("insert into goods(goods_id,goods_name,goods_originprice,goods_price,classify_id,goods_recommend,goods_picture,goods_sellerid,goods_addtime,goods_newold) values(?,?,?,?,?,?,?,?,?,?)", [UUID.v1(),params.goodsname,params.oldprice,params.price,params.goodstype,params.recommend,goods_picture,params.sellerid,datetime.format(new Date(),'YYYY-MM-DD HH:mm:ss'),params.goodsnewold], function (err, result) {
         if (err) {
             for(var i=0;i<req.files.length;i++){
                 fs.unlinkSync('static/public/uploads/'+req.files[i].filename)
@@ -187,6 +200,18 @@ router.post('/uploadheadphoto',upload.single('file'), (req, res) => {
             jsonWrite(res, {
                 'headphoto':req.file.filename
             });
+        }
+    })
+});
+
+router.post('/getSinglegood', (req, res) => {
+    var params = req.body;
+    conn.query("select * from v_goods where goods_id=?", [params.id], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
         }
     })
 });

@@ -1,29 +1,23 @@
 <template>
   <div class="shop">
-      <div class="classify">
-          <ul>
-              <li v-for="classi in classis">{{classi.title}}</li>
-          </ul>
+      <div class="topwrap">
+          <div class="classify">
+              <router-link to="/shopitem" class="toclassify" >
+                <li class="classifynav" v-for="item in items" @click="changeClassify">{{item.classify_name}}</li>
+              </router-link>
+          </div>
+          <div class="searchwrap">
+              <input type="text" class="form-control" placeholder="请输入商品名称">
+              <router-link to="/searchresult">
+                  <button class="searchbtn">搜 索</button>
+              </router-link>
+          </div>
       </div>
       <div class="goodswrap">
-        <div class="searchwrap">
-          <div class="search">
-              <div class="row">
-                  <div class="input-group">
-                    <input type="text" placeholder="请输入“二货”名称" class="form-control">
-                    <button class="searchbtn" type="button">搜 索</button>
-                  </div>
-              </div>
-              
-          </div>
-        </div>
-        <div class="goodslist">
             <transition>
                 <router-view></router-view>
             </transition>
-        </div>
       </div>
-
   </div>
 </template>
 
@@ -31,24 +25,34 @@
 import {mapGetters} from 'vuex'
     export default {
         data(){
-            return{}
+            return{
+                items:[]
+            }
         },
         created(){
-            this.$store.dispatch('changeShow','shop')   //导航栏切换
-        },
-        computed:{
-            ...mapGetters({
-                classis:'getClassis'
+            var that=this;
+            this.$store.dispatch('changeShow','shop');   //导航栏切换
+            this.$http.post('api/user/getClassifyOptions',{},{})
+            .then(response=>{
+                that.items=response.body;
+            });
+            this.$http.post('api/user/getGoodsinfo',{},{})
+            .then(response=>{
+                
             })
+        },
+        methods:{
+            changeClassify(){
+
+            }
         }
     }
 </script>
 
 <style scoped>
     .shop{
-        width: 1150px;
+        width: 1000px;
         margin:0 auto;
-        display: flex;
     }
     .shop:after{
         width: 0;
@@ -57,70 +61,61 @@ import {mapGetters} from 'vuex'
         clear: both;
         content: ""
     }
+    .topwrap{
+        height: 65px;
+        margin-top: 10px;
+        border-radius: 5px;
+        background: #3d444c;
+    }
     .classify{
-        width: 150px;
-        background-color: #3d444c;
-    }
-    .classify ul li{
-        border-bottom: 1px solid black;
-        height: 50px;
-        line-height: 50px;
+        width: 641px;
+        height: 35px;
+        line-height: 35px;
         text-align: center;
+        margin-top: 15px;
+        margin-left: 15px;
+        font-size: 13px;
+        border-right: 1px solid #000;
+        display: inline-block;
     }
-    .classify ul li{
+    .classifynav{
+        width: 64px;
+        height: 35px;
+        float: left;
+        border: 1px solid #000;
+        border-right: none;
+        border-radius: 2px;
+        background: #3d444c;
+    }
+    .classifynav:hover{
+        background: #00bc9b;
+    }
+    .toclassify{
         color: #fff;
-        cursor: pointer;
-    }
-    .classify ul li:hover{
-        color:#00bc9b;
-        background: #2a2e33;
-    }
-    .goodswrap{
-        width: 1000px;
     }
     .searchwrap{
-        height: 85px;
+        width: 340px;
+        height: 35px;
         position: relative;
-        background-color: #666;
+        margin-left: 675px;
+        margin-top: -40px;
     }
-    .search{
-        width: 538px;
-        height: 36px;
-        margin: 0 auto;
-        padding-top: 25px;
-    }
-    .search input{
-        position: relative;
-        width: 444px;
-        padding-left: 10px;
-        border: 2px solid #3d444c;
-        color: #666;
-        font: 14px/32px "微软雅黑";
+    .form-control{
+        width: 250px;
+        display: inline-block;
     }
     .searchbtn{
-        float: right;
-        width: 80px;
-        height: 34px;
-        background-color: #3d444c;
-        color: #fff;
-        font: 16px/36px "微软雅黑";
-        cursor: pointer;
+        width: 60px;
+        height: 35px;
+        font-size: 15px;
         border: none;
-        padding: 0;
-        margin-left: 2px;
-        outline-style: none;
+        background: #109e10;
+        color: #fff;
         border-radius: 5px;
+        margin-left: -3px;
     }
     .searchbtn:hover{
-        color: #00bc9b;
-        background: #2a2e33;
-    }
-    .markDelete{
-        position: absolute;
-        top: 32px;
-        left: 670px;
-        color: #666;
-        cursor: pointer;
+        background: green;
     }
 </style>
 

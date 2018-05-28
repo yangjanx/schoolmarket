@@ -96,7 +96,8 @@ export default {
               gender:response.body[0].gender,
               age:response.body[0].age,
               headphoto:response.body[0].headphoto,
-              institute:response.body[0].institute          
+              institute:response.body[0].institute,
+              selfsign:response.body[0].selfsign      
             });
             layer.msg("登录成功！");
             setTimeout(function() {

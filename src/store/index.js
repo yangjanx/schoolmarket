@@ -23,43 +23,30 @@ const state = {
 		usercenter: 'usercenter',
 		publish: 'publish'
 	},
-	ahuterArr:[
-		{name:'ahtuer1',src:'../static/images/ahuter1.jpg'},
-		{name:'ahuter2',src:'../static/images/ahuter2.jpg'},
+	ahuterArr: [
+		{ name: 'ahtuer1', src: '../static/images/ahuter1.jpg' },
+		{ name: 'ahuter2', src: '../static/images/ahuter2.jpg' },
 	],
-	classis:[
-		{title:'商品分类'},
-		{title:'书  籍'},
-		{title:'手  机'},
-		{title:'衣鞋伞帽'},
-		{title:'电  脑'},
-		{title:'配  件'},
-		{title:'电  器'},
-		{title:'代  步'},
-		{title:'娱  乐'},
-		{title:'运动健身'},
-		{title:'其  他'}				
-	],
-	goods:{},
+	goods: {},
 	selectedItem: {},
 	sessionSelectedItem: {},
 	cart: [],
-	isLogin:0,
-	user:{}
+	isLogin: 0,
+	user: {}
 }
 const mutations = {
-	CHANGE_USER(state,data){
-		for(var key in data){
-			state.user[key]=data[key];
+	CHANGE_USER(state, data) {
+		for (var key in data) {
+			state.user[key] = data[key];
 		}
 	},
-	CHANGE_GOODS(state,data){
-		for(var key in data){
-			state.goods[key]=data[key];
+	CHANGE_GOODS(state, data) {
+		for (var key in data) {
+			state.goods[key] = data[key];
 		}
 	},
-	CHANGE_LOGIN(state,data){
-		state.isLogin=data;
+	CHANGE_LOGIN(state, data) {
+		state.isLogin = data;
 	},
 	CHANGE_HW(state, obj) {
 		state.clientwidth = obj.w;
@@ -209,17 +196,17 @@ const actions = {
 	}
 }
 const getters = {
-	getUser:function(state){
-		var result={}
-		for(var key in state.user){
-			result[key]=state.user[key]
+	getUser: function (state) {
+		var result = {}
+		for (var key in state.user) {
+			result[key] = state.user[key]
 		}
 		return result
 	},
 	getGoods: function (state) {
-		var result={}
-		for(var key in state.goods){
-			result[key]=state.goods[key]
+		var result = {}
+		for (var key in state.goods) {
+			result[key] = state.goods[key]
 		}
 		return result
 	},
@@ -257,13 +244,10 @@ const getters = {
 	getLoginway: function (state) {
 		return state.loginway
 	},
-	getAhuter:function(state){
+	getAhuter: function (state) {
 		return state.ahuterArr
 	},
-	getClassis:function(state){
-		return state.classis
-	},
-	getIsLogin:function(state){
+	getIsLogin: function (state) {
 		return state.isLogin
 	}
 }

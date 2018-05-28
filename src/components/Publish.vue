@@ -1,7 +1,7 @@
 <template>
   <div class="publish">
           <div class="input_div">
-              <input type="text" placeholder="请输入商品名称，30字以内" class="input_top input_normal" maxlength="30" v-model="goodsname">
+              <input type="text" placeholder="请输入商品标题，30字以内" class="input_top input_normal" maxlength="30" v-model="goodsname">
           </div>
           <div class="goodsprice">
               <span class="input-group-addon" id="basic-addon1">￥</span>
@@ -17,19 +17,22 @@
               </select>
           </div>
           <div class="input_div">
+              <input type="text" placeholder="请输入商品成新率(几成新,数字1~10,整数)" class="input_middle input_normal" maxlength="2" v-model="goodsnewold">
+          </div>
+          <div class="input_div">
               <textarea type="text" placeholder="请输入商品介绍，200字以内" class="input_bottom" maxlength="200" v-model="recommend"></textarea>
           </div>
           <div class="goodspic">
-            <p>商品图片（ 0~3 张）</p>
+            <p>商品图片（最少1张，最多3张）</p>
             <div class="addpic">
-              <input type="file" id="upload" @change="addImg" style="display:none;">
+              <input type="file" id="upload" @change="addImg" style="display:none;" accept="image/*">
               <div class="pic1">
                 <img src="static/images/addphoto1.png" id="pic0" @click="chooseImg">
               </div>
-              <div class="pic2">
+              <div class="pic2" v-show="img1">
                 <img src="static/images/addphoto1.png" id="pic1" @click="chooseImg">
               </div>
-              <div class="pic3">
+              <div class="pic3" v-show="img2">
                 <img src="static/images/addphoto1.png" id="pic2" @click="chooseImg">
               </div>
             </div>
@@ -46,11 +49,14 @@ export default {
       oldprice: "",
       price: "",
       goodstype: "",
+      goodsnewold:'',
       recommend: "",
       current_click_img: "",
       upload_files: [null,null,null],
       markuploadisselected: [0, 0, 0],
-      options:[]
+      options:[],
+      img1:false,
+      img2:false,
     };
   },
   created() {
@@ -70,7 +76,13 @@ export default {
       var that = this;
       var reader = new FileReader();
       var f = $("#upload")[0].files[0];
-      this.upload_files[parseInt(that.current_click_img[3])]=f;
+      var index=parseInt(that.current_click_img[3]);
+      this.upload_files[index]=f;
+      if(index==0){
+        this.img1=true
+      }else{
+        this.img2=true
+      };
       reader.readAsDataURL(f);
       reader.onload = function() {
         $("#" + that.current_click_img).attr("src", this.result);
@@ -83,20 +95,42 @@ export default {
         if (result == null) return false;
         return true;
       }
+      function checknewold(str) {
+        var result = str.match(/^([1-9]|10)$/); //检验成新率,只能输入1~10的整数
+        if (result == null) return false;
+        return true;
+      }
       var goodsname=this.goodsname;
+      if(!this.goodsname){
+        layer.msg("商品标题不可为空！", function() {});
+        return;
+      }
       var oldprice=this.oldprice;
       if (!checkprice(oldprice)) {
-        layer.msg("请输入正确的商品价格！", function() {});
+        layer.msg("请输入正确的商品原价格！", function() {});
         return;
       }
       var price=this.price;
       if (!checkprice(price)) {
-        layer.msg("请输入正确的商品价格！", function() {});
+        layer.msg("请输入正确的商品现价格！", function() {});
         return;
       }
       var goodstype=this.goodstype;
+      if(!this.goodstype){
+        layer.msg('请选择商品类别！',function(){});
+        return;
+      }
+      var goodsnewold=this.goodsnewold;
+      if (!checknewold(goodsnewold)) {
+        layer.msg("请输入正确成新率！", function() {});
+        return;
+      }
       var recommend=this.recommend;
       var sellerid=this.$store.state.user.id;
+      if(!this.img1){
+        layer.msg('请至少上传一张图片！',function(){});
+        return;
+      }
       var that=this;
       var param = new FormData();
       for(var i=0;i<this.upload_files.length;i++){
@@ -107,16 +141,11 @@ export default {
       param.append('oldprice',oldprice);
       param.append('price',price);
       param.append('goodstype',goodstype);
+      param.append('goodsnewold',goodsnewold);
       param.append('recommend',recommend);
       param.append('sellerid',sellerid);
       this.$http.post('/api/user/addGoods',param,{headers:{'Content-Type':'multipart/form-data'}})
       .then(response=>{
-        // that.$store.commit('CHANGE_GOODS',{
-        //   name:that.goodsname,
-        //   sellerid:that.sellerid,
-        //   oldprice:that.oldprice,
-        //   price:that.price
-        // });
         layer.msg('发布商品成功!');
         setTimeout(function() {
           that.$router.push({ path: "/mypublication" });
@@ -246,11 +275,18 @@ export default {
   display: inline-block;
   margin-left:6px;
 }
-.addpic img{
+#pic0,#pic1,#pic2{
   cursor: pointer;
   width: 172px;
   height: 172px;
   margin: 3px;
+}
+.delete0,.delete1,.delete2{
+  position: relative;
+  top: -32px;
+  left: 145px;
+  cursor: pointer;
+  display: none;
 }
 </style>
 
