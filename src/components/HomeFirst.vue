@@ -1,7 +1,7 @@
 <template>
   <div class="home_first">
       <div class="home_first_left" :style="{height:home_first_height+'px'}">
-          <h1 :style="{height:home_first_height_margin+'px',lineHeight:home_first_height_margin+'px'}">安工大淘淘乐</h1>
+          <h1 :style="{height:home_first_height_margin+'px',lineHeight:home_first_height_margin+'px'}">安工大淘儿平台</h1>
           <router-link to="/" tag="img" src="../static/images/kaws.jpg" alt="kaws" class="kaws"></router-link>
       </div>
       <div class="imgcontainer" :style="{height:home_first_height+'px'}">

@@ -22,7 +22,7 @@
           </li>
         </ul>
         <h1 class="theme">
-          <router-link to="/home">Ahut-Tao</router-link>
+          <router-link to="/home">Ahutaoer</router-link>
         </h1>
       </div>
     </header>
