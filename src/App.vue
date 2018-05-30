@@ -3,7 +3,7 @@
     <header>
       <div class="login_top">
         <ul class="login_nav">
-          <li><router-link to="/cart" class="login">购物车({{cart.length}})</router-link></li>
+          <li><router-link to="/cart" class="login">购物车({{user.cartnum}})</router-link></li>
           <li @click="changeLoginway('login')" v-if="isLogin==0"><router-link to="/login" class="login">登录&nbsp;Login</router-link></li>
           <li @click="changeLoginway('register')" v-if="isLogin==0"><router-link to="/login" class="register">注册&nbsp;Register</router-link></li>
           <li v-if="isLogin==1"><router-link to="/usercenter">你好，<span class="nick">{{user.nick}}</span></router-link></li>
@@ -59,7 +59,6 @@ export default {
     ...mapGetters({
       show: "getShow",
       items: "getFootItems",
-      cart: "getCart",
       left_navs: "getLeft_nav",
       right_navs: "getRight_nav",
       isLogin:"getIsLogin",
@@ -73,6 +72,9 @@ export default {
     Logout(){
       this.$store.commit('CHANGE_LOGIN','0');
       layer.msg('注销成功!');
+      this.$store.commit('CHANGE_USER',{
+        cartnum:0
+      })
       setTimeout(function(){
         window.location.reload();
       },1000)

@@ -11,7 +11,7 @@
                     <div class="nick" v-text="user.nick"></div>
                     <div class="uid" v-text="'ID：'+user.id"></div>
                     <div class="collectionwrap">
-                        <div class="collection"><router-link to="/collection">已收藏的宝贝[ {{collectionNumber}} ]</router-link></div>
+                        <div class="collection">已收藏的宝贝[ {{user.collectnum}} ]</router-link></div>
                     </div>
                 </div>
                 <div class="selfintro">
@@ -26,9 +26,8 @@
             <div class="usermenu">
                 <ul class="menu-ul">
                     <router-link class="menu-link" to="/personalprofile" tag="li">Personal Profile</router-link>
+                    <router-link class="menu-link" to="/collection" tag="li">My Collection</router-link>
                     <router-link class="menu-link" to="/mypublication" tag="li">My Publication</router-link>
-                    <router-link class="menu-link" to="/orderhistory" tag="li">Order History</router-link>
-                    <router-link class="menu-link" to="/mycomment" tag="li">My Reviews</router-link>
                     <router-link class="menu-link" to="/modifypsd" tag="li">Modify Password</router-link>
                 </ul>
             </div>
@@ -44,9 +43,7 @@
 import { mapGetters } from "vuex";
 export default {
   data() {
-    return {
-      collectionNumber: 7
-    };
+    return {};
   },
   computed: {
     ...mapGetters({
@@ -164,12 +161,9 @@ export default {
   height: 30px;
   line-height: 30px;
 }
-.collection a {
-  color: orangered;
+.collection{
+  color: #00bc9b;
   font-weight: 500;
-}
-.collection a:hover {
-  color: orange;
 }
 .usermenu {
   height: 500px;

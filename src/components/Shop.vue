@@ -2,15 +2,11 @@
   <div class="shop">
       <div class="topwrap">
           <div class="classify">
-              <router-link to="/shopitem" class="toclassify" >
-                <li class="classifynav" v-for="item in items" @click="changeClassify">{{item.classify_name}}</li>
-              </router-link>
+            <li class="classifynav" v-for="item in items" @click="changeClassify(item.classify_id)">{{item.classify_name}}</li>
           </div>
-          <div class="searchwrap">
-              <input type="text" class="form-control" placeholder="请输入商品名称">
-              <router-link to="/searchresult">
-                  <button class="searchbtn">搜 索</button>
-              </router-link>
+          <div class="searchwrap" @keyup.enter="Searchresult">
+            <input type="text" class="form-control" placeholder="请输入商品名称" v-model="searchtext">
+            <button class="searchbtn" @click="Searchresult">搜 索</button>
           </div>
       </div>
       <div class="goodswrap">
@@ -26,7 +22,8 @@ import {mapGetters} from 'vuex'
     export default {
         data(){
             return{
-                items:[]
+                items:[],
+                searchtext:''
             }
         },
         created(){
@@ -36,14 +33,13 @@ import {mapGetters} from 'vuex'
             .then(response=>{
                 that.items=response.body;
             });
-            this.$http.post('api/user/getGoodsinfo',{},{})
-            .then(response=>{
-                
-            })
         },
         methods:{
-            changeClassify(){
-
+            changeClassify(classifyid){
+                this.$router.replace('/shoplist?classifyid='+classifyid);
+            },
+            Searchresult(){
+                this.$router.replace('/shoplist?searchtext='+this.searchtext)
             }
         }
     }
@@ -86,12 +82,10 @@ import {mapGetters} from 'vuex'
         border-right: none;
         border-radius: 2px;
         background: #3d444c;
+        color: #fff;
     }
     .classifynav:hover{
         background: #00bc9b;
-    }
-    .toclassify{
-        color: #fff;
     }
     .searchwrap{
         width: 340px;
@@ -118,4 +112,3 @@ import {mapGetters} from 'vuex'
         background: green;
     }
 </style>
-

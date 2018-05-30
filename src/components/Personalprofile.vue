@@ -4,35 +4,35 @@
           <p class="basic">基本资料</p><br><br>
           <label class="a">昵&emsp;&emsp;称：&emsp;</label><div class="b1">{{usernick}}</div>
           <input type="text" class="form-control" id="c1" v-model="usernick" @blur="change_input('1','')">
-          <button class="edit" @click="change_input('1','show')">编 辑</button><br><br>
+          <img :src="editpng" class="edit" @click="change_input('1','show')"><br><br>
           <label class="a">&emsp;I&emsp;D&emsp;：&emsp;</label><div class="b8">{{userid}}</div>
           <input type="text" class="form-control" id="c8" v-model="userid"><br><br>
           <label class="a">性&emsp;&emsp;别：&emsp;</label><div class="b9">{{showgender(usergender)}}</div>
           <input type="text" class="form-control" id="c9" v-model="usergender"><br><br>
           <label class="a">真实姓名：&emsp;</label><div class="b2">{{usertruename}}</div>
           <input type="text" class="form-control" id="c2" v-model="usertruename" @blur="change_input('2','')">
-          <button class="edit" @click="change_input('2','show')">编 辑</button><br><br>
+          <img :src="editpng" class="edit" @click="change_input('2','show')"><br><br>
           <label class="a">年&emsp;&emsp;龄：&emsp;</label><div class="b3">{{userage}}</div>
           <input type="text" class="form-control" id="c3" v-model="userage" @blur="change_input('3','')">
-          <button class="edit" @click="change_input('3','show')">编 辑</button><br><br>
+          <img :src="editpng" class="edit" @click="change_input('3','show')"><br><br>
           <label class="a">所在学院：&emsp;</label><div class="b4">{{userinstitute}}</div>
           <input type="text" class="form-control" id="c4" v-model="userinstitute" @blur="change_input('4','')">
-          <button class="edit" @click="change_input('4','show')">编 辑</button><br><br>
+          <img :src="editpng" class="edit" @click="change_input('4','show')"><br><br>
           <label class="a">个性签名：&emsp;</label><div class="b10">{{userselfsign}}</div>
           <input type="text" class="form-control" id="c10" v-model="userselfsign" @blur="change_input('10','')" maxlength="15">
-          <button class="edit" @click="change_input('10','show')">编 辑</button>
+          <img :src="editpng" class="edit" @click="change_input('10','show')">
       </div>
       <div class="contactprofile">
           <p class="contact">联系资料</p><br><br>
           <label class="a">手机：&emsp;</label><div class="b5">{{userphone}}</div>
           <input type="text" class="form-control" id="c5" v-model="userphone" @blur="change_input('5','')">
-          <button class="edit" @click="change_input('5','show')">编 辑</button><br><br>
+          <img :src="editpng" class="edit" @click="change_input('5','show')"><br><br>
           <label class="a">Q Q ：&emsp;</label><div class="b6">{{userqq}}</div>
           <input type="text" class="form-control" id="c6" v-model="userqq" @blur="change_input('6','')">
-          <button class="edit" @click="change_input('6','show')">编 辑</button><br><br>
+          <img :src="editpng" class="edit" @click="change_input('6','show')"><br><br>
           <label class="a">微信：&emsp;</label><div class="b7">{{userwechat}}</div>
           <input type="text" class="form-control" id="c7" v-model="userwechat" @blur="change_input('7','')">
-          <button class="edit" @click="change_input('7','show')">编 辑</button><br><br>
+          <img :src="editpng" class="edit" @click="change_input('7','show')"><br><br>
           <button type="button" class="btn btn-default" id="btn" @click="EditProfile()">保存修改</button>
       </div>
   </div>
@@ -52,7 +52,8 @@ export default {
       userwechat: "",
       userid: "",
       usergender: "",
-      userselfsign:''
+      userselfsign:'',
+      editpng:'static/images/edit.png'
     };
   },
   created: function() {
@@ -142,39 +143,46 @@ export default {
         return true;
       }
       var nick = this.usernick;
+      if(!nick){layer.msg('昵称不能为空！',function() {})};
       if (!checknick(nick)) {
-        layer.msg("修改失败，昵称格式不合法！", function() {});
+        layer.msg("昵称格式不合法！", function() {});
         return;
       }
       var id = this.$store.state.user.id;
       var truename = this.usertruename;
+      if(!truename){layer.msg('请完整填写资料！',function() {})};
       if (!checktruename(truename)) {
-        layer.msg("修改失败，真实姓名只能包括2-4个中文！");
+        layer.msg("真实姓名只能包括2-4个中文！",function() {});
         return;
       }
       var age = this.userage;
+      if(!age){layer.msg('请完整填写资料！',function() {})};
       if (!checkage(age)) {
-        layer.msg("修改失败，年龄区间为0-99岁！");
+        layer.msg("年龄区间为0-99岁！",function() {});
         return;
       }
       var institute = this.userinstitute;
+      if(!institute){layer.msg('请完整填写资料！',function() {})};
       if (!checkinstitute(institute)) {
-        layer.msg("修改失败，请输入1-12个中文的学院名称！");
+        layer.msg("请输入1-12个中文的学院名称！",function() {});
         return;
       }
       var phone = this.userphone;
+      if(!phone){layer.msg('请完整填写资料！',function() {})};
       if (!checkphone(phone)) {
-        layer.msg("修改失败，请输入格式正确的手机号码！");
+        layer.msg("请输入格式正确的手机号码！",function() {});
         return;
       }
       var qq = this.userqq;
-      if (!checkqq(qq)) {
-        layer.msg("修改失败，请输入5-11位的QQ号码！");
+      if(!qq){layer.msg('QQ号不能为空！',function() {})};
+      if(!checkqq(qq)) {
+        layer.msg("请输入正确的5-11位的QQ号码！",function() {});
         return;
       }
       var wechat = this.userwechat;
+      if(!wechat){layer.msg('请完整填写资料！',function() {})};
       if (!checkwechat(wechat)) {
-        layer.msg("修改失败，请输入6-20位的微信号！");
+        layer.msg("请输入正确的6-20位的微信号！",function() {});
         return;
       }
       var selfsign = this.userselfsign;
@@ -284,9 +292,10 @@ export default {
   border: none;
   font-size: 14px;
   float: right;
-}
-.edit:hover {
-  color: orange;
+  height: 16px;
+  width: 16px;
+  margin-top: 3px;
+  cursor: pointer;
 }
 </style>
 

@@ -41,19 +41,43 @@
 
 <script>
 export default {
-	data(){
-		return{
-			goods:[]
-		}
-	},
-	created(){
-		var that=this;
-		this.$http.post('api/user/getGoodsinfo',{},{})
-    	.then(response=>{
-		  that.goods=response.body;
-    });
+  data() {
+    return {
+      goods: []
+    };
   },
-  methods:{
+  created() {
+    var that = this;
+    var classifyid = this.$route.query.classifyid;
+    this.$http
+      .post(
+        "api/user/getGoodsinfo",
+        {
+          classifyid: classifyid
+        },
+        {}
+      )
+      .then(response => {
+        that.goods = response.body;
+      });
+  },
+  methods: {
+    Loadshoplist() {
+      var that = this;
+      var classifyid = this.$route.query.classifyid;
+      this.$http
+        .post(
+          "api/user/getGoodsinfo",
+          {
+            classifyid: classifyid,
+            searchtext:this.$route.query.searchtext
+          },
+          {}
+        )
+        .then(response => {
+          that.goods = response.body;
+        });
+    },
     showgender(temp) {
       if (temp == 0) {
         return "男";
@@ -61,13 +85,16 @@ export default {
         return "女";
       }
     },
-    showSellerinfo(e){
-      var pop=$(e.currentTarget).next();
+    showSellerinfo(e) {
+      var pop = $(e.currentTarget).next();
       pop.fadeIn();
-      setTimeout(function(){
+      setTimeout(function() {
         pop.fadeOut();
-      },3000)
+      }, 3000);
     }
+  },
+  watch: {
+    $route: "Loadshoplist"
   }
 };
 </script>
@@ -134,7 +161,7 @@ export default {
   vertical-align: top;
   float: right;
 }
-.headpic1{
+.headpic1 {
   width: 24px;
   height: 24px;
   margin-right: 5px;
@@ -154,10 +181,10 @@ export default {
   display: inline-block;
   cursor: pointer;
 }
-.user_name:hover{
-  color: orangered
+.user_name:hover {
+  color: orangered;
 }
-.oldprice{
+.oldprice {
   color: #777;
   font-size: 12px;
 }
@@ -170,8 +197,8 @@ export default {
   display: inline-block;
   margin-left: 3px;
 }
-.sellerinfo{
-  border: 3px solid #0C9;
+.sellerinfo {
+  border: 3px solid #0c9;
   height: 100px;
   width: 200px;
   position: relative;
@@ -181,20 +208,20 @@ export default {
   opacity: 0.7;
   display: none;
 }
-.triangle1{
+.triangle1 {
   height: 15px;
   width: 15px;
   display: block;
   position: absolute;
-  top:97px;
+  top: 97px;
   left: 30px;
   border-width: 15px;
   border-style: solid dashed dashed;
-  border-color:#0C9 transparent transparent;
+  border-color: #0c9 transparent transparent;
   font-size: 0;
   line-height: 0;
 }
-.triangle2{
+.triangle2 {
   display: block;
   position: absolute;
   border-width: 17px;
@@ -205,25 +232,25 @@ export default {
   font-size: 0;
   line-height: 0;
 }
-.user_info img{
+.user_info img {
   cursor: pointer;
 }
-.qwe{
+.qwe {
   display: flex;
 }
-.sellerhead{
+.sellerhead {
   height: 60px;
   width: 60px;
   margin-top: 5px;
   margin-left: 5px;
   display: inline-block;
 }
-.headpic2{
+.headpic2 {
   height: 60px;
   widows: 60px;
   border-radius: 30px;
 }
-.sellerinfo1{
+.sellerinfo1 {
   height: 60px;
   width: 111px;
   display: inline-block;
@@ -231,10 +258,10 @@ export default {
   margin-top: 5px;
   font-size: 12px;
 }
-.sellerinfo1 p{
+.sellerinfo1 p {
   margin: 3px auto;
 }
-.sellerinfo2{
+.sellerinfo2 {
   height: 24px;
   line-height: 24px;
   text-align: center;

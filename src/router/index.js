@@ -5,15 +5,12 @@ import HomeFirst from '@/components/HomeFirst'
 import Cart from '@/components/Cart'
 import Login from '@/components/Login'
 import Publish from '@/components/Publish'
-import Searchresult from '@/components/Searchresult'
 import Shop from '@/components/Shop'
 import Shopitem from '@/components/Shopitem'
 import Usercenter from '@/components/Usercenter'
 import Shoplist from '@/components/Shoplist'
 import Personalprofile from '@/components/Personalprofile'
 import Modifypsd from '@/components/Modifypsd'
-import Orderhistory from '@/components/Orderhistory'
-import Mycomment from '@/components/Mycomment'
 import Collection from '@/components/Collection'
 import Mypublication from '@/components/Mypublication'
 
@@ -31,10 +28,10 @@ export default new Router({
     {
       path: '/shop',
       component: Shop,
+      redirect:'/shoplist',
       children:[
-        {path:'/',component:Shoplist},
-        {path:'/shopitem',component:Shopitem},
-        {path:'/searchresult',component:Searchresult}
+        {path:'/shoplist',component:Shoplist},
+        {path:'/shopitem',component:Shopitem}
       ]
     },
     {
@@ -42,8 +39,6 @@ export default new Router({
       component: Usercenter,
       redirect:'/personalprofile',
       children:[
-        {path:'/orderhistory',component:Orderhistory},
-        {path:'/mycomment',component:Mycomment},
         {path:'/personalprofile',component:Personalprofile},
         {path:'/modifypsd',component:Modifypsd},
         {path:'/collection',component:Collection},

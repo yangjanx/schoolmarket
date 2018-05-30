@@ -2,7 +2,6 @@ var models = require('../db');
 var express = require('express');
 var router = express.Router();
 var mysql = require('mysql');
-var $sql = require('../sqlMap');
 var multer = require('multer');
 var fs = require('fs');
 var path = require('path')
@@ -37,7 +36,7 @@ var jsonWrite = function (res, ret) {
 // 增加用户接口
 router.post('/addUser', (req, res) => {
     var params = req.body;
-    conn.query("select *from user where user_id=?", [params.id], function (err, result) {
+    conn.query("select *from v_user where user_id=?", [params.id], function (err, result) {
         if (err) {
             console.log(err);
         }
@@ -64,7 +63,7 @@ router.post('/addUser', (req, res) => {
 
 router.post('/login', (req, res) => {
     var params = req.body;
-    conn.query("select * from user where user_id=?", [params.id], function (err, result) {
+    conn.query("select * from v_user where user_id=?", [params.id], function (err, result) {
         if (err) {
             console.log(err);
         }
@@ -103,7 +102,7 @@ router.post('/editProfile', (req, res) => {
 
 router.post('/getUserinfo', (req, res) => {
     var params = req.body;
-    conn.query("select *from user where user_id=?", [params.id], function (err, result) {
+    conn.query("select *from v_user where user_id=?", [params.id], function (err, result) {
         if (err) {
             console.log(err);
         }
@@ -115,7 +114,16 @@ router.post('/getUserinfo', (req, res) => {
 
 router.post('/getGoodsinfo', (req, res) => {
     var params = req.body;
-    conn.query("select *from v_goods order by goods_addtime DESC", [], function (err, result) {
+    var classifyid=params.classifyid;
+    var searchtext=params.searchtext;
+    var selectsql='';
+    if(!classifyid&&!searchtext)
+        selectsql="select *from v_goods order by goods_addtime DESC";
+    else if(classifyid&&!searchtext)
+        selectsql="select *from v_goods where classify_id=? order by goods_addtime DESC";
+    else
+        selectsql="select *from v_goods where goods_name like '%"+searchtext+"%' order by goods_addtime DESC";
+    conn.query(selectsql, [params.classifyid], function (err, result) {
         if (err) {
             console.log(err);
         }
@@ -127,7 +135,7 @@ router.post('/getGoodsinfo', (req, res) => {
 
 router.post('/modifyPsd', (req, res) => {
     var params = req.body;
-    conn.query("select *from user where user_id=?",[params.id],function(err,result){
+    conn.query("select *from v_user where user_id=?",[params.id],function(err,result){
         if(err){
             console.log(err);
         }
@@ -211,6 +219,170 @@ router.post('/getSinglegood', (req, res) => {
             console.log(err);
         }
         if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/getGoodsbyuser', (req, res) => {
+    var params = req.body;
+    conn.query("select * from v_goods where goods_sellerid=?", [params.id], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/addToCart', (req, res) => {
+    var params = req.body;
+    conn.query("select *from cart where cart_goods_id=? and cart_user_id=?", [params.goodsid,params.userid], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            if (result.length > 0) {
+                jsonWrite(res, {
+                    code: -1,
+                    msg: '该商品已在购物车中！'
+                });
+            } else {
+                conn.query("INSERT INTO cart(cart_goods_id,cart_user_id,cart_addtime) VALUES(?,?,?)", [params.goodsid, params.userid,datetime.format(new Date(),'YYYY-MM-DD HH:mm:ss')], function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    if (result) {
+                        jsonWrite(res, result);
+                    }
+                })
+            }
+        }
+    })
+
+});
+
+router.post('/getCartinfo', (req, res) => {
+    var params = req.body;
+    conn.query("select *from v_cart where cart_user_id=? order by cart_addtime DESC", [params.id], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/getCollectinfo', (req, res) => {
+    var params = req.body;
+    conn.query("select *from v_collect where collect_user_id=? order by collect_addtime DESC", [params.id], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/removefromCart', (req, res) => {
+    var params = req.body;
+    conn.query("delete from cart where cart_goods_id=? and cart_user_id=?", [params.goodsid,params.userid], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/removefromCollect', (req, res) => {
+    var params = req.body;
+    conn.query("delete from collect where collect_goods_id=? and collect_user_id=?", [params.goodsid,params.userid], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/deleteGoods', (req, res) => {
+    var params = req.body;
+    conn.query("select goods_picture from goods where goods_id=?",[params.goodsid],function(err, result){
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            var pictures=result[0].goods_picture.split('#');
+            for(var i=0;i<pictures.length;i++){
+                fs.unlinkSync('static/public/uploads/'+pictures[i]);
+            }
+        }
+    conn.query("delete from goods where goods_id=?", [params.goodsid], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
+        }
+    })
+    })
+});
+
+router.post('/addToCollection', (req, res) => {
+    var params = req.body;
+    conn.query("select *from collect where collect_goods_id=? and collect_user_id=?", [params.goodsid,params.userid], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            if (result.length > 0) {
+                jsonWrite(res, {
+                    code: -1,
+                    msg: '该商品已在收藏夹中！'
+                });
+            } else {
+                conn.query("INSERT INTO collect(collect_goods_id,collect_user_id,collect_addtime) VALUES(?,?,?)", [params.goodsid, params.userid,datetime.format(new Date(),'YYYY-MM-DD HH:mm:ss')], function (err, result) {
+                    if (err) {
+                        console.log(err);
+                    }
+                    if (result) {
+                        jsonWrite(res, result);
+                    }
+                })
+            }
+        }
+    })
+
+});
+
+router.post('/addComment', (req, res) => {
+    var params = req.body;
+    conn.query("insert into comment(comment_id,comment_user_id,comment_goods_id,comment_content,comment_addtime) values(?,?,?,?,?)", [UUID.v1(),params.userid,params.goodsid,params.content,datetime.format(new Date(),'YYYY-MM-DD HH:mm:ss')], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            jsonWrite(res, result);
+        }
+    })
+});
+
+router.post('/getComment', (req, res) => {
+    var params = req.body;
+    conn.query("select *from v_comment where comment_goods_id=? order by comment_addtime DESC", [params.goodsid], function (err, result) {
+        if (err) {
+            console.log(err);
+        }
+        if (result) {
+            for(var i=0;i<result.length;i++){
+                result[i].comment_addtime=datetime.format(new Date(result[i].comment_addtime),'YYYY-MM-DD HH:mm:ss')
+            }
             jsonWrite(res, result);
         }
     })
