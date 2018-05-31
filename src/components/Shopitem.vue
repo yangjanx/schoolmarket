@@ -127,6 +127,9 @@ export default {
     },
     addComment(){
       var that=this;
+      if(this.$store.state.isLogin==0){
+        layer.msg('登录后才能评论！',function(){})
+      }else{
       this.$http.post('api/user/addComment',{
         userid:that.$store.state.user.id,
         goodsid:that.good.goods_id,
@@ -138,6 +141,7 @@ export default {
           window.location.reload();
         },1000)
       })
+      }
     }
   }
 };

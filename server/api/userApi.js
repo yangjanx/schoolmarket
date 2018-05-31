@@ -8,6 +8,7 @@ var path = require('path')
 var UUID = require('uuid')
 var datetime=require('silly-datetime');
 
+
 var storage = multer.diskStorage({  
     destination: function (req, file, cb) {  
         cb(null, 'static/public/uploads')  
@@ -21,8 +22,8 @@ var upload = multer({storage: storage})
 
 // 连接数据库
 var conn = mysql.createConnection(models.mysql);
-
 conn.connect();
+
 var jsonWrite = function (res, ret) {
     if (typeof ret === 'undefined') {
         res.json({
