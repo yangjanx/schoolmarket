@@ -10,7 +10,7 @@
 					<th class="th_op">操作</th>
 				</tr>
 				<tr id="singlebox" v-for="(good,index) in goods">
-					<td class="td_chk"><input type="checkbox" :value="good.goods_price" name="goodcheck" @change="setselectAll"></td>
+					<td class="td_chk"><input type="checkbox" :value="good.goods_price" :data-goodindex='index' name="goodcheck" @change="setselectAll"></td>
 					<td class="td_item">
 						<div>
 							<img :src="['static/public/uploads/'+good.goods_picture]"/><p><router-link :to="'/shopitem?goods_id='+good.goods_id" class="ahover">{{good.goods_name}}</router-link></p>
@@ -32,7 +32,7 @@
 					已选<span>{{selectSum}}</span>件
 				</p>
 				<p>共<span>{{priceSum}}</span>元</p>
-				<button>结 算</button>
+				<button @click="Balance">立刻联系卖家</button>
 			</div>
 		</table>
 		<div v-if="!user.cartnum" style="height:656px;">
@@ -113,6 +113,22 @@ export default {
         
       if(checkedcart.length==cartnum1){
         $("#selectAll").prop("checked",true)
+      }
+    },
+    Balance(){
+      var that=this;
+      var goodsid=[];
+      var checkedcart=$("input[type='checkbox'][name='goodcheck']:checked");
+      if(checkedcart.length==0){
+        layer.msg('你还没有选择任何商品！',function(){})
+      }else{
+        layer.confirm('快去商品详情页找寻卖家联系方式吧！',{
+          btn:['确定','取消']
+        },function(){
+          layer.msg('现在就去！',{icon:1});
+        },function(){
+          layer.msg('请重新选择')
+        })
       }
     }
   }
@@ -249,13 +265,13 @@ label {
 }
 .t_foot button {
   display: inline-block;
-  width: 150px;
+  width: 180px;
   text-align: center;
   padding: 15px 30px;
   background: #00bc9b;
   border: none;
   cursor: pointer;
-  margin-left: 211px;
+  margin-left: 181px;
 }
 .t_foot button:hover{
 	background: green;

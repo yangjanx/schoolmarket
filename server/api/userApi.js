@@ -123,7 +123,7 @@ router.post('/getGoodsinfo', (req, res) => {
     else if(classifyid&&!searchtext)
         selectsql="select *from v_goods where classify_id=? order by goods_addtime DESC";
     else
-        selectsql="select *from v_goods where goods_name like '%"+searchtext+"%' order by goods_addtime DESC";
+        selectsql="select *from v_goods where goods_name like '%"+searchtext.trim()+"%' order by goods_addtime DESC";
     conn.query(selectsql, [params.classifyid], function (err, result) {
         if (err) {
             console.log(err);

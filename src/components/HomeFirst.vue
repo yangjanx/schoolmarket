@@ -1,7 +1,7 @@
 <template>
   <div class="home_first">
       <div class="home_first_left" :style="{height:home_first_height+'px'}">
-          <h1 :style="{height:home_first_height_margin+'px',lineHeight:home_first_height_margin+'px'}">安工大淘儿平台</h1>
+          <h1 :style="{height:home_first_height_margin+'px',lineHeight:home_first_height_margin+'px'}">安工大淘儿网</h1>
           <router-link to="/" tag="img" src="../static/images/kaws.jpg" alt="kaws" class="kaws"></router-link>
       </div>
       <div class="imgcontainer" :style="{height:home_first_height+'px'}">
@@ -33,8 +33,8 @@ export default {
   data() {
     return {
       originalData: {
-        img_width: 350,
-        img_height: 350,
+        img_width: 400,
+        img_height: 400,
         btn_width: 40,
         btn_height: 40,
         num: 4,
@@ -191,6 +191,7 @@ export default {
 }
 .imgcontainer {
   margin-left: 400px;
+  background: #f1f1f1;
 }
 
 .wrapper {
